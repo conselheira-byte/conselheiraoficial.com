@@ -43,6 +43,14 @@
   <script>
     (function(){
       var oferta=document.getElementById('planos'),revelada=false;
+      var parametros=new URLSearchParams(window.location.search);
+      if(parametros.size){
+        document.querySelectorAll('a.buy').forEach(function(link){
+          var checkout=new URL(link.href);
+          parametros.forEach(function(valor,chave){checkout.searchParams.set(chave,valor)});
+          link.href=checkout.toString();
+        });
+      }
       function revelar(){if(!revelada){revelada=true;oferta.classList.add('visible')}requestAnimationFrame(function(){oferta.scrollIntoView({behavior:'smooth'})})}
       document.querySelectorAll('[data-planos]').forEach(function(botao){botao.addEventListener('click',revelar)});
       setTimeout(function(){if(!revelada){revelada=true;oferta.classList.add('visible')}},8000);
